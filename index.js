@@ -48,7 +48,7 @@ const handleChecking = () => {
     });
 };
 
-cron.schedule("59 19 18 * * *",
+cron.schedule("59 20 19 * * *",
   async () => {
     console.log("Running a job at 10:00 AM every day * * *");
     let count = 0
