@@ -23,7 +23,7 @@ const handleChecking = () => {
     "Accept-Language": "vi,en-US;q=0.9,en;q=0.8",
     "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
     Cookie:
-      "PHPSESSID=p0eq2b651js0qkrgd28nie1s8f; sender_id=6599567076759856; ckid=2ca84ed0a2e27911664b3e8ee81cea3e; _ga=GA1.1.1547070271.1714700267; _fbp=fb.1.1714700266627.212631251; _ga_C69QL9B2DF=GS1.1.1714700266.1.1.1714701173.0.0.0; us_id=c2fb671837f2517b61f4d5f70bfea1ed",
+      `PHPSESSID=p0eq2b651js0qkrgd28nie1s8f; sender_id=6599567076759856; ckid=2ca84ed0a2e27911664b3e8ee81cea3e; _ga=GA1.1.1547070271.1714700267; _fbp=fb.1.1714700266627.212631251; _ga_C69QL9B2DF=GS1.1.1714700266.1.1.1714701173.0.0.0; us_id=${process.env.US_ID}`,
     Origin: "https://account.riokupon.com",
     Referer: "https://account.riokupon.com/missions.php",
     "Sec-Ch-Ua":
@@ -41,22 +41,26 @@ const handleChecking = () => {
   axios
     .post(url, data, { headers })
     .then((response) => {
-      console.log(response.data);
+      console.log('Success:', response.data);
     })
     .catch((error) => {
-      console.error("Error:", error);
+      console.error('Error:', error);
     });
 };
-// Định nghĩa một cron job chạy vào 10:00 AM hàng ngày
-cron.schedule(
-  "38 16 * * *",
+
+cron.schedule("59 19 18 * * *",
   async () => {
-    console.log("Running a job at 10:00 AM every day");
-    await handleChecking()
+    console.log("Running a job at 10:00 AM every day * * *");
+    let count = 0
+    while(true) {
+      if(count > 20) break;
+      await handleChecking()
+      await setDelay(1000)
+      count++;
+      console.log('try count:', count);
+    }
   },
-  {
-    timezone: "Asia/Saigon", // Đặt múi giờ nếu cần
-  }
+  { timezone: "Asia/Saigon",}
 );
 
 app.get("/", (req, res) => {
