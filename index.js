@@ -2,6 +2,11 @@
 const express = require("express");
 const cron = require("node-cron");
 const axios = require("axios");
+const dayjs = require('dayjs')
+const utc = require('dayjs/plugin/utc')
+const timezone = require('dayjs/plugin/timezone')
+dayjs.extend(utc)
+dayjs.extend(timezone)
 
 const app = express();
 const PORT = 3000;
@@ -48,19 +53,20 @@ const handleChecking = () => {
     });
 };
 
-cron.schedule("59 20 19 * * *",
+cron.schedule("59 59 23 * * *",
   async () => {
     console.log("Running a job at 10:00 AM every day * * *");
     let count = 0
     while(true) {
-      if(count > 20) break;
+      if(count > 30) break;
       await handleChecking()
-      await setDelay(1000)
+      await setDelay(300)
+      const time = dayjs().tz("Asia/Saigon").format("YYYY-MM-DD HH:mm:ss")
       count++;
-      console.log('try count:', count);
+      console.log('try count:', count, time);
     }
   },
-  { timezone: "Asia/Saigon",}
+  { timezone: "Asia/Saigon" }
 );
 
 app.get("/", (req, res) => {
