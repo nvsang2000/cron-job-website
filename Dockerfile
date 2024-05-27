@@ -14,4 +14,4 @@ RUN npm install
 EXPOSE 80/tcp
 
 # Start the server using the production build
-CMD [ "npm run start" ]
+CMD [ "node", "index.js" ]
