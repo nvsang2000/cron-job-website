@@ -43,7 +43,6 @@ const handleChecking = async () => {
     "X-Requested-With": "XMLHttpRequest",
   };
 
-  await setDelay(200)
   await axios
     .post(url, data, { headers })
     .then((response) => {
@@ -54,14 +53,14 @@ const handleChecking = async () => {
     });
 };
 
-cron.schedule("00 00 00 * * *",
+cron.schedule("59 59 23 * * *",
   async () => {
     console.log("Running a job at 00 00 00 AM every day * * *");
     let count = 0
     while(true) {
-      if(count > 10) break;
+      if(count > 20) break;
       await handleChecking()
-      await setDelay(500)
+      await setDelay(300)
       const time = dayjs().tz("Asia/Saigon").format("YYYY-MM-DD HH:mm:ss")
       count++;
       console.log('try count:', count, time);
