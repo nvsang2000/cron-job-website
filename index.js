@@ -43,6 +43,7 @@ const handleChecking = async () => {
     "X-Requested-With": "XMLHttpRequest",
   };
 
+  await setDelay(200)
   await axios
     .post(url, data, { headers })
     .then((response) => {
@@ -55,7 +56,7 @@ const handleChecking = async () => {
 
 cron.schedule("00 00 00 * * *",
   async () => {
-    console.log("Running a job at 10:00 AM every day * * *");
+    console.log("Running a job at 00 00 00 AM every day * * *");
     let count = 0
     while(true) {
       if(count > 10) break;
