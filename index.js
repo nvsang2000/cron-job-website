@@ -60,7 +60,7 @@ cron.schedule("00 00 00 * * *",
     while(true) {
       if(count > 10) break;
       await handleChecking()
-      await setDelay(300)
+      await setDelay(500)
       const time = dayjs().tz("Asia/Saigon").format("YYYY-MM-DD HH:mm:ss")
       count++;
       console.log('try count:', count, time);
