@@ -15,7 +15,7 @@ const setDelay = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-const handleChecking = () => {
+const handleChecking = async () => {
   const url = "https://account.riokupon.com/api/account.php";
   const data = {
     tp: "account",
@@ -43,7 +43,7 @@ const handleChecking = () => {
     "X-Requested-With": "XMLHttpRequest",
   };
 
-  axios
+  await axios
     .post(url, data, { headers })
     .then((response) => {
       console.log('Success:', response.data);
@@ -53,12 +53,12 @@ const handleChecking = () => {
     });
 };
 
-cron.schedule("59 59 23 * * *",
+cron.schedule("00 00 00 * * *",
   async () => {
     console.log("Running a job at 10:00 AM every day * * *");
     let count = 0
     while(true) {
-      if(count > 30) break;
+      if(count > 10) break;
       await handleChecking()
       await setDelay(300)
       const time = dayjs().tz("Asia/Saigon").format("YYYY-MM-DD HH:mm:ss")
