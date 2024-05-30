@@ -15,7 +15,7 @@ const setDelay = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
 };
 
-const handleChecking = async () => {
+const handleChecking = () => {
   const url = "https://account.riokupon.com/api/account.php";
   const data = {
     tp: "account",
@@ -43,7 +43,7 @@ const handleChecking = async () => {
     "X-Requested-With": "XMLHttpRequest",
   };
 
-  await axios
+  axios
     .post(url, data, { headers })
     .then((response) => {
       console.log('Success:', response.data);
