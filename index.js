@@ -53,14 +53,14 @@ const handleChecking = () => {
     });
 };
 
-cron.schedule("59 59 23 * * *",
+cron.schedule("50 59 23 * * *",
   async () => {
     console.log("Running a job at 00 00 00 AM every day * * *");
     let count = 0
     while(true) {
-      if(count > 20) break;
+      if(count > 30) break;
       await handleChecking()
-      await setDelay(300)
+      await setDelay(500)
       const time = dayjs().tz("Asia/Saigon").format("YYYY-MM-DD HH:mm:ss")
       count++;
       console.log('try count:', count, time);
